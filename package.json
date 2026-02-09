@@ -1,0 +1,70 @@
+{
+  "name": "@mobula/sdk",
+  "version": "0.1.4",
+  "description": "Unified TypeScript SDK to access all Mobula REST and WebSocket endpoints with full type safety and real-time support",
+  "author": "Mobula",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MobulaFi/mobula-api.git",
+    "directory": "packages/sdk"
+  },
+  "homepage": "https://docs.mobula.io/rest-api-reference/sdk",
+  "bugs": {
+    "url": "https://docs.mobula.io"
+  },
+  "keywords": [
+    "mobula",
+    "sdk",
+    "typescript",
+    "rest",
+    "websocket",
+    "realtime",
+    "api",
+    "crypto",
+    "defi",
+    "blockchain"
+  ],
+  "type": "module",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "bun run build.ts",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "bun run build"
+  },
+  "dependencies": {
+    "@mobula_labs/types": "^0.1.6",
+    "axios": "^1.12.2",
+    "crypto-js": "^4.2.0",
+    "eventemitter3": "^5.0.1",
+    "isomorphic-ws": "^5.0.0",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@mobula/tsconfig": "workspace:*",
+    "@total-typescript/ts-reset": "*",
+    "@types/crypto-js": "*",
+    "typescript": "*",
+    "vitest": "*"
+  },
+  "optionalDependencies": {
+    "ws": "^8.18.0"
+  },
+  "browser": {
+    "ws": false
+  }
+}

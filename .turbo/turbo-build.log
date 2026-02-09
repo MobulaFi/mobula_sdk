@@ -1,0 +1,15 @@
+
+[0m[2m[35m$[0m [2m[1mbun run build.ts[0m
+Building ESM...
+Building CJS...
+Generating TypeScript declarations...
+[0m[31mShellError[0m[2m:[0m [1mFailed with exit code 2[0m
+ exitCode[0m[2m:[0m [0m[33m2[0m[0m[2m,[0m
+   stdout[0m[2m:[0m [0m[32m"src/rest/client.ts(122,3): error TS2724: '\"@mobula_labs/types\"' has no exported member named 'WalletDefiPositionsResponse'. Did you mean 'WalletPositionsResponse'?\n"[0m[0m[2m,[0m
+   stderr[0m[2m:[0m [0m[32m""[0m[0m[2m,[0m
+
+[0m      [2mat [0mShellPromise[2m ([0m[0m[36munknown[0m[2m:[0m[33m75[0m[2m:[33m16[0m[2m)[0m
+[0m      [2mat [0mBunShell[2m ([0m[0m[36munknown[0m[2m:[0m[33m191[0m[2m:[33m35[0m[2m)[0m
+[0m
+[2mBun v1.3.4 (macOS arm64)[0m
+[0m[31merror[0m[2m:[0m script [1m"build"[0m exited with code 1[0m
