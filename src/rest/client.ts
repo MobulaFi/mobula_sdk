@@ -9,11 +9,9 @@ import type {
   AssetPriceHistoryBatchResponse,
   AssetPriceHistoryParams,
   AssetPriceHistoryResponse,
-  AssetQueryParams,
   BlockchainsResponse,
   CreateWebhookParams,
   CreateWebhookResponse,
-  DebugPulseViewsResponse,
   DefiPositionsResponse,
   DeleteWebhookParams,
   DeleteWebhookResponse,
@@ -22,42 +20,18 @@ import type {
   FundingRateResponse,
   ListWebhooksParams,
   ListWebhooksResponse,
-  MarketBlockchainPairsParams,
-  MarketBlockchainPairsResponse,
-  MarketBlockchainStatsParams,
-  MarketBlockchainStatsResponse,
-  MarketDataResponse,
   MarketDetailsBatchParams,
   MarketDetailsBatchResponse,
   MarketDetailsParams,
   MarketDetailsResponse,
-  MarketHistoryPairParams,
-  MarketHistoryPairResponse,
-  MarketHistoryParams,
-  MarketHistoryResponse,
-  MarketMultiDataAssetParams,
-  MarketMultiDataResponse,
-  MarketMultiHistoryParams,
-  MarketMultiHistoryResponse,
-  MarketMultiPricesParams,
-  MarketMultiPricesResponse,
   MarketOHLCVHistoryBatchParams,
   MarketOHLCVHistoryBatchResponse,
   MarketOHLCVHistoryParams,
   MarketOHLCVHistoryResponse,
-  MarketPairParams,
-  MarketPairResponse,
-  MarketPairsParams,
-  MarketPairsResponse,
-  MarketQueryParams,
-  MarketQueryResponse,
   MarketSparklineParams,
   MarketSparklineResponse,
   MarketTokenHoldersParams,
   MarketTokenHoldersResponse,
-  MarketTokenVsMarketParams,
-  MarketTokenVsMarketResponse,
-  MarketTotalResponse,
   MarketTradesPairParams,
   MarketTradesPairResponse,
   MetadataCategoriesResponse,
@@ -67,9 +41,6 @@ import type {
   MetadataTrendingsResponse,
   MultiMetadataParams,
   MultiMetadataResponse,
-  MultiPortfolioResponse,
-  NFTMetadataParams,
-  NFTMetadataResponse,
   PortfolioParams,
   PortfolioResponse,
   PulsePaginationResponse,
@@ -77,7 +48,6 @@ import type {
   PulseResponse,
   SearchFastResponse,
   SearchParams,
-  SearchResponse,
   SingleTokenTradeResponse,
   SwapQuotingInstructionsResponse,
   SwapQuotingQueryParams,
@@ -101,8 +71,16 @@ import type {
   TokenOHLCVHistoryResponse,
   TokenPositionsParams,
   TokenPositionsResponse,
+  TokenPriceAtBatchParams,
+  TokenPriceAtBatchResponse,
+  TokenPriceAtParams,
+  TokenPriceAtResponse,
   TokenPriceBatchParams,
   TokenPriceBatchResponse,
+  TokenPriceHistoryBatchParams,
+  TokenPriceHistoryBatchResponse,
+  TokenPriceHistoryParams,
+  TokenPriceHistoryResponse,
   TokenPriceParams,
   TokenPriceResponse,
   TokenSecurityParams,
@@ -118,8 +96,6 @@ import type {
   WalletActivityV2Response,
   WalletAnalysisParams,
   WalletAnalysisResponse,
-  WalletBalanceUSDParams,
-  WalletBalanceUSDResponse,
   WalletDefiPositionsParams,
   WalletDefiPositionsResponse,
   WalletFundingParams,
@@ -131,20 +107,16 @@ import type {
   WalletLabelsResponse,
   WalletNFTParams,
   WalletNFTResponse,
-  WalletNFTTransactionsResponse,
   WalletPositionBatchParams,
   WalletPositionBatchResponse,
   WalletPositionParams,
   WalletPositionResponse,
   WalletPositionsParams,
   WalletPositionsResponse,
-  WalletRawTransactionsParams,
-  WalletRawTransactionsResponse,
-  WalletSmartMoneyResponse,
   WalletTradesParams,
   WalletTradesResponse,
-  WalletTransactionsParams,
-  WalletTransactionsResponse,
+  WalletTradesV2Params,
+  WalletTradesV2Response,
   WalletUnsafeParams,
   WalletV1DeployerParams,
   WalletV1DeployerResponse,
@@ -257,100 +229,23 @@ export class RestClient {
     return this.request<undefined, BlockchainsResponse>('get', '/api/1/blockchains');
   }
 
-  async fetchMarketBlockchainPairs(params: MarketBlockchainPairsParams): Promise<MarketBlockchainPairsResponse> {
-    return this.request<MarketBlockchainPairsParams, MarketBlockchainPairsResponse>(
-      'get',
-      '/api/1/market/blockchain/pairs',
-      params,
-    );
-  }
-
-  async fetchMarketBlockchainStats(params: MarketBlockchainStatsParams): Promise<MarketBlockchainStatsResponse> {
-    return this.request<MarketBlockchainStatsParams, MarketBlockchainStatsResponse>(
-      'get',
-      '/api/1/market/blockchain/stats',
-      params,
-    );
-  }
-
   async fetchFundingRate(params: FundingRateParams): Promise<FundingRateResponse> {
     return this.request<FundingRateParams, FundingRateResponse>('get', '/api/1/market/cefi/funding-rate', params);
-  }
-
-  async fetchMarketData(params: AssetQueryParams): Promise<MarketDataResponse> {
-    return this.request<AssetQueryParams, MarketDataResponse>('get', '/api/1/market/data', params);
-  }
-
-  async fetchMarketHistory(params: MarketHistoryParams): Promise<MarketHistoryResponse> {
-    return this.request<MarketHistoryParams, MarketHistoryResponse>('get', '/api/1/market/history', params);
-  }
-
-  async fetchMarketHistoricalPairData(params: MarketHistoryPairParams): Promise<MarketHistoryPairResponse> {
-    return this.request<MarketHistoryPairParams, MarketHistoryPairResponse>(
-      'get',
-      '/api/1/market/history/pair',
-      params,
-    );
-  }
-
-  async fetchMarketMultiData(params: MarketMultiDataAssetParams): Promise<MarketMultiDataResponse> {
-    return this.request<MarketMultiDataAssetParams, MarketMultiDataResponse>(
-      'post',
-      '/api/1/market/multi-data',
-      params,
-    );
-  }
-
-  async fetchMarketMultiHistory(params: MarketMultiHistoryParams): Promise<MarketMultiHistoryResponse> {
-    return this.request<MarketMultiHistoryParams, MarketMultiHistoryResponse>(
-      'get',
-      '/api/1/market/multi-history',
-      params,
-    );
-  }
-
-  async fetchMarketMultiPrices(params: MarketMultiPricesParams): Promise<MarketMultiPricesResponse> {
-    return this.request<MarketMultiPricesParams, MarketMultiPricesResponse>(
-      'post',
-      '/api/1/market/multi-prices',
-      params,
-    );
-  }
-
-  async fetchMarketPair(params: MarketPairParams): Promise<MarketPairResponse> {
-    return this.request<MarketPairParams, MarketPairResponse>('get', '/api/1/market/pair', params);
-  }
-
-  async fetchMarketPairs(params: MarketPairsParams): Promise<MarketPairsResponse> {
-    return this.request<MarketPairsParams, MarketPairsResponse>('get', '/api/1/market/pairs', params);
-  }
-
-  async fetchMarketQuery(params: MarketQueryParams): Promise<MarketQueryResponse> {
-    return this.request<MarketQueryParams, MarketQueryResponse>('get', '/api/1/market/query', params);
   }
 
   async fetchMarketSparkline(params: MarketSparklineParams): Promise<MarketSparklineResponse> {
     return this.request<MarketSparklineParams, MarketSparklineResponse>('get', '/api/1/market/sparkline', params);
   }
 
+  /**
+   * @deprecated Use token-holder-positions endpoint instead.
+   */
   async fetchMarketTokenHolders(params: MarketTokenHoldersParams): Promise<MarketTokenHoldersResponse> {
     return this.request<MarketTokenHoldersParams, MarketTokenHoldersResponse>(
       'get',
       '/api/1/market/token/holders',
       params,
     );
-  }
-
-  async fetchMarketTotalVsMarket(params: MarketTokenVsMarketParams): Promise<MarketTokenVsMarketResponse> {
-    return this.request<MarketTokenVsMarketParams, MarketTokenVsMarketResponse>(
-      'get',
-      '/api/1/market/token-vs-market',
-      params,
-    );
-  }
-
-  async fetchMarketTotal(): Promise<MarketTotalResponse> {
-    return this.request<undefined, MarketTotalResponse>('get', '/api/1/market/total');
   }
 
   async fetchMarketTradesPair(params: MarketTradesPairParams): Promise<MarketTradesPairResponse> {
@@ -375,22 +270,12 @@ export class RestClient {
     return this.request<MultiMetadataParams, MultiMetadataResponse>('post', '/api/1/multi-metadata', params);
   }
 
-  ///// search
-
-  async fetchSearch(params: SearchParams): Promise<SearchResponse> {
-    return this.request<SearchParams, SearchResponse>('get', '/api/1/search', params);
-  }
-
   async fetchSearchFast(params: SearchParams): Promise<SearchFastResponse> {
     return this.request<SearchParams, SearchFastResponse>('get', '/api/2/fast-search', params);
   }
 
   async fetchTokenFirstBuyers(params: TokenFirstBuyersParams): Promise<TokenFirstBuyersResponse> {
     return this.request<TokenFirstBuyersParams, TokenFirstBuyersResponse>('get', '/api/1/token/first-buyers', params);
-  }
-
-  async fetchWalletBalanceUSD(params: WalletBalanceUSDParams): Promise<WalletBalanceUSDResponse> {
-    return this.request<WalletBalanceUSDParams, WalletBalanceUSDResponse>('get', '/api/1/wallet/balance-usd', params);
   }
 
   async fetchWalletV1Deployer(params: WalletV1DeployerParams): Promise<WalletV1DeployerResponse> {
@@ -405,60 +290,27 @@ export class RestClient {
     return this.request<WalletNFTParams, WalletNFTResponse>('get', '/api/1/wallet/nfts', params);
   }
 
-  async fetchMetadataNFTS(params: NFTMetadataParams): Promise<NFTMetadataResponse> {
-    return this.request<NFTMetadataParams, NFTMetadataResponse>('get', '/api/1/metadata/nfts', params);
-  }
-
   async fetchWalletPortfolio(params: PortfolioParams): Promise<PortfolioResponse> {
     return this.request<PortfolioParams, PortfolioResponse>('get', '/api/1/wallet/portfolio', params);
-  }
-
-  async fetchMultiWalletPortfolio(params: WalletUnsafeParams): Promise<MultiPortfolioResponse> {
-    return this.request<WalletUnsafeParams, MultiPortfolioResponse>('get', '/api/1/wallet/multi-portfolio', params);
   }
 
   async fetchDefiPositions(params: WalletUnsafeParams): Promise<DefiPositionsResponse> {
     return this.request<WalletUnsafeParams, DefiPositionsResponse>('get', '/api/1/wallet/defi-positions', params);
   }
 
-  async fetchWalletSmartMoney(): Promise<WalletSmartMoneyResponse> {
-    return this.request<undefined, WalletSmartMoneyResponse>('get', '/api/1/wallet/smart-money');
-  }
-
+  /**
+   * @deprecated Use fetchWalletTradesV2() instead. This V1 endpoint will be removed in a future release.
+   */
   async fetchWalletTrades(params: WalletTradesParams): Promise<WalletTradesResponse> {
     return this.request<WalletTradesParams, WalletTradesResponse>('post', '/api/1/wallet/trades', params);
   }
 
-  async fetchWalletTransactions(params: WalletTransactionsParams): Promise<WalletTransactionsResponse> {
-    return this.request<WalletTransactionsParams, WalletTransactionsResponse>(
-      'get',
-      '/api/1/wallet/transactions',
-      params,
-    );
+  async fetchWalletTradesV2(params: WalletTradesV2Params): Promise<WalletTradesV2Response> {
+    return this.request<WalletTradesV2Params, WalletTradesV2Response>('get', '/api/2/wallet/trades', params);
   }
 
-  async fetchWalletRawTransactions(params: WalletRawTransactionsParams): Promise<WalletRawTransactionsResponse> {
-    return this.request<WalletRawTransactionsParams, WalletRawTransactionsResponse>(
-      'get',
-      '/api/1/wallet/raw-transactions',
-      params,
-    );
-  }
-
-  async fetchWalletNFTTransactions(params: WalletRawTransactionsParams): Promise<WalletNFTTransactionsResponse> {
-    return this.request<WalletRawTransactionsParams, WalletNFTTransactionsResponse>(
-      'get',
-      '/api/1/wallet/nft-transfers',
-      params,
-    );
-  }
-
-  async fetchWalletTokensTransactions(params: WalletRawTransactionsParams): Promise<WalletRawTransactionsResponse> {
-    return this.request<WalletRawTransactionsParams, WalletRawTransactionsResponse>(
-      'get',
-      '/api/1/wallet/token-transfers',
-      params,
-    );
+  async postWalletTradesV2(params: WalletTradesV2Params): Promise<WalletTradesV2Response> {
+    return this.request<WalletTradesV2Params, WalletTradesV2Response>('post', '/api/2/wallet/trades', params);
   }
 
   async fetchWalletLabels(params: WalletLabelsParams): Promise<WalletLabelsResponse> {
@@ -467,10 +319,6 @@ export class RestClient {
 
   async postPulseV2Pagination(params: PulsePayloadParams): Promise<PulsePaginationResponse> {
     return this.request<PulsePayloadParams, PulsePaginationResponse>('post', '/api/2/pulse/pagination', params);
-  }
-
-  async postPulseV2DebugViews(params: PulsePayloadParams): Promise<DebugPulseViewsResponse> {
-    return this.request<PulsePayloadParams, DebugPulseViewsResponse>('post', '/api/debug/pulse/views', params);
   }
 
   async fetchPulseV2(params: PulsePayloadParams): Promise<PulseResponse> {
@@ -696,6 +544,30 @@ export class RestClient {
 
   async fetchTokenPriceBatch(params: TokenPriceBatchParams): Promise<TokenPriceBatchResponse> {
     return this.request<TokenPriceBatchParams, TokenPriceBatchResponse>('post', '/api/2/token/price', params);
+  }
+
+  async fetchTokenPriceAt(params: TokenPriceAtParams): Promise<TokenPriceAtResponse> {
+    return this.request<TokenPriceAtParams, TokenPriceAtResponse>('get', '/api/2/token/price-at', params);
+  }
+
+  async fetchTokenPriceAtBatch(params: TokenPriceAtBatchParams): Promise<TokenPriceAtBatchResponse> {
+    return this.request<TokenPriceAtBatchParams, TokenPriceAtBatchResponse>('post', '/api/2/token/price-at', params);
+  }
+
+  async fetchTokenPriceHistory(params: TokenPriceHistoryParams): Promise<TokenPriceHistoryResponse> {
+    return this.request<TokenPriceHistoryParams, TokenPriceHistoryResponse>(
+      'get',
+      '/api/2/token/price-history',
+      params,
+    );
+  }
+
+  async fetchTokenPriceHistoryBatch(params: TokenPriceHistoryBatchParams): Promise<TokenPriceHistoryBatchResponse> {
+    return this.request<TokenPriceHistoryBatchParams, TokenPriceHistoryBatchResponse>(
+      'post',
+      '/api/2/token/price-history',
+      params,
+    );
   }
 
   async fetchWalletDefiPositionsV2(params: WalletDefiPositionsParams): Promise<WalletDefiPositionsResponse> {
