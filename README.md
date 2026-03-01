@@ -51,7 +51,7 @@ console.log(marketData);
 ```typescript
 interface MobulaClientOptions {
   apiKey?: string; // Your Mobula API key
-  restUrl?: string; // Custom REST API URL (default: 'https://explorer-api.mobula.io')
+  restUrl?: string; // Custom REST API URL (default: 'https://demo-api.mobula.io')
   wsUrl?: string; // Custom WebSocket URL
   wsUrlMap?: Partial<Record<keyof SubscriptionPayload, string>>; // Custom WebSocket URLs per stream type
   timeout?: number; // Request timeout in milliseconds (default: 10000)
