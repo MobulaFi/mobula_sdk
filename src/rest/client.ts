@@ -71,10 +71,6 @@ import type {
   TokenOHLCVHistoryResponse,
   TokenPositionsParams,
   TokenPositionsResponse,
-  TokenPriceAtBatchParams,
-  TokenPriceAtBatchResponse,
-  TokenPriceAtParams,
-  TokenPriceAtResponse,
   TokenPriceBatchParams,
   TokenPriceBatchResponse,
   TokenPriceHistoryBatchParams,
@@ -111,12 +107,12 @@ import type {
   WalletPositionBatchResponse,
   WalletPositionParams,
   WalletPositionResponse,
+  WalletPositionsBatchParams,
+  WalletPositionsBatchResponse,
   WalletPositionsParams,
   WalletPositionsResponse,
   WalletTradesParams,
   WalletTradesResponse,
-  WalletTradesV2Params,
-  WalletTradesV2Response,
   WalletUnsafeParams,
   WalletV1DeployerParams,
   WalletV1DeployerResponse,
@@ -126,6 +122,14 @@ import type {
 import axios, { type AxiosError, type AxiosInstance } from 'axios';
 import type { z } from 'zod';
 import { getAuthHeaders, type MobulaOptions } from '../auth.ts';
+import type {
+  TokenPriceAtBatchParams,
+  TokenPriceAtBatchResponse,
+  TokenPriceAtParams,
+  TokenPriceAtResponse,
+  WalletTradesV2Params,
+  WalletTradesV2Response,
+} from '../types/missing-types.ts';
 
 export type MobulaErrorData = Record<string, unknown> | string | null;
 
@@ -486,6 +490,14 @@ export class RestClient {
     return this.request<WalletPositionBatchParams, WalletPositionBatchResponse>(
       'post',
       '/api/2/wallet/position',
+      params,
+    );
+  }
+
+  async fetchWalletPositionsBatch(params: WalletPositionsBatchParams): Promise<WalletPositionsBatchResponse> {
+    return this.request<WalletPositionsBatchParams, WalletPositionsBatchResponse>(
+      'post',
+      '/api/2/wallet/positions',
       params,
     );
   }
