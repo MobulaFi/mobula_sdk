@@ -34,6 +34,34 @@ export interface TokenPriceAtBatchResponse {
   )[];
 }
 
+// WalletPositionsBatch types (POST /api/2/wallet/positions - batch)
+export interface WalletPositionsBatchItemParams {
+  wallet: string;
+  blockchains?: string[];
+  limit?: number;
+  offset?: number;
+  sortBy?: string;
+  order?: 'asc' | 'desc';
+  useSwapRecipient?: boolean;
+  includeAllBalances?: boolean;
+}
+
+export type WalletPositionsBatchParams = WalletPositionsBatchItemParams[] | { items: WalletPositionsBatchItemParams[] };
+
+export interface WalletPositionsBatchResponse {
+  payload: (
+    | {
+        wallet: string;
+        data: unknown[];
+        walletMetadata?: unknown;
+        pagination?: unknown;
+      }
+    | { wallet: string; error: string }
+    | null
+  )[];
+  hostname?: string;
+}
+
 // WalletTradesV2 types (GET/POST /api/2/wallet/trades)
 export interface WalletTradesV2Params {
   wallet: string;

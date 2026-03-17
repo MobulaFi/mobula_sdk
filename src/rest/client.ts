@@ -107,8 +107,6 @@ import type {
   WalletPositionBatchResponse,
   WalletPositionParams,
   WalletPositionResponse,
-  WalletPositionsBatchParams,
-  WalletPositionsBatchResponse,
   WalletPositionsParams,
   WalletPositionsResponse,
   WalletTradesParams,
@@ -127,6 +125,8 @@ import type {
   TokenPriceAtBatchResponse,
   TokenPriceAtParams,
   TokenPriceAtResponse,
+  WalletPositionsBatchParams,
+  WalletPositionsBatchResponse,
   WalletTradesV2Params,
   WalletTradesV2Response,
 } from '../types/missing-types.ts';
