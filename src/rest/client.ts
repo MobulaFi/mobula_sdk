@@ -15,6 +15,8 @@ import type {
   DefiPositionsResponse,
   DeleteWebhookParams,
   DeleteWebhookResponse,
+  EnrichedTradesParams,
+  EnrichedTradesResponse,
   FormattedTokenTradesResponse,
   FundingRateParams,
   FundingRateResponse,
@@ -600,5 +602,9 @@ export class RestClient {
 
   async fetchTradesFilters(params: TradesFiltersParams): Promise<TradesFiltersResponse> {
     return this.request<TradesFiltersParams, TradesFiltersResponse>('get', '/api/2/trades/filters', params);
+  }
+
+  async fetchEnrichedTrades(params: EnrichedTradesParams): Promise<EnrichedTradesResponse> {
+    return this.request<EnrichedTradesParams, EnrichedTradesResponse>('get', '/api/2/token/trades-enriched', params);
   }
 }
