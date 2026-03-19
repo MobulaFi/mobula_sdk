@@ -123,6 +123,8 @@ import axios, { type AxiosError, type AxiosInstance } from 'axios';
 import type { z } from 'zod';
 import { getAuthHeaders, type MobulaOptions } from '../auth.ts';
 import type {
+  TokenPositionsBatchParams,
+  TokenPositionsBatchResponse,
   TokenPriceAtBatchParams,
   TokenPriceAtBatchResponse,
   TokenPriceAtParams,
@@ -400,7 +402,23 @@ export class RestClient {
   }
 
   async fetchTokenHolderPositions(params: TokenPositionsParams): Promise<TokenPositionsResponse> {
-    return this.request<TokenPositionsParams, TokenPositionsResponse>('post', '/api/2/token/holder-positions', params);
+    return this.request<TokenPositionsParams, TokenPositionsResponse>('get', '/api/2/token/holder-positions', params);
+  }
+
+  async fetchTokenHolderPositionsBatch(params: TokenPositionsBatchParams): Promise<TokenPositionsBatchResponse> {
+    return this.request<TokenPositionsBatchParams, TokenPositionsBatchResponse>(
+      'post',
+      '/api/2/token/holder-positions',
+      params,
+    );
+  }
+
+  async fetchTokenTraderPositionsBatch(params: TokenPositionsBatchParams): Promise<TokenPositionsBatchResponse> {
+    return this.request<TokenPositionsBatchParams, TokenPositionsBatchResponse>(
+      'post',
+      '/api/2/token/trader-positions',
+      params,
+    );
   }
 
   async fetchTokenDetails(params: TokenDetailsParams): Promise<TokenDetailsResponse> {
