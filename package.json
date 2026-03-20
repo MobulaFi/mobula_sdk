@@ -1,6 +1,6 @@
 {
   "name": "@mobula/sdk",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Unified TypeScript SDK to access all Mobula REST and WebSocket endpoints with full type safety and real-time support",
   "author": "Mobula",
   "license": "MIT",
@@ -47,7 +47,7 @@
     "prepublishOnly": "bun run build"
   },
   "dependencies": {
-    "@mobula_labs/types": "0.1.10",
+    "@mobula_labs/types": "0.1.11",
     "axios": "^1.12.2",
     "crypto-js": "^4.2.0",
     "eventemitter3": "^5.0.1",
