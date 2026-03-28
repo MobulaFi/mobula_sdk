@@ -3,37 +3,6 @@
  * to @mobula_labs/types (npm) yet. Defined locally until the npm package is updated.
  */
 
-// TokenPriceAt types (GET/POST /api/2/token/price-at)
-export interface TokenPriceAtParams {
-  blockchain?: string;
-  address?: string;
-  timestamp: number;
-}
-
-export type TokenPriceAtBatchParams = TokenPriceAtParams[] | { items: TokenPriceAtParams[] };
-
-export interface TokenPriceAtResponse {
-  data: {
-    priceUSD: number;
-    timestamp: number;
-    swapTimestamp: number;
-    poolAddress: string;
-  };
-}
-
-export interface TokenPriceAtBatchResponse {
-  payload: (
-    | {
-        priceUSD: number;
-        timestamp: number;
-        swapTimestamp: number;
-        poolAddress: string;
-      }
-    | { error?: string }
-    | null
-  )[];
-}
-
 // WalletPositionsBatch types (POST /api/2/wallet/positions - batch)
 export interface WalletPositionsBatchItemParams {
   wallet: string;
