@@ -80,3 +80,103 @@ export interface WalletTradesV2Response {
     pageEntries: number;
   };
 }
+
+// ===== Bridge types (Alpha Preview) =====
+
+export interface BridgeQuoteParams {
+  originChainId: string;
+  destinationChainId: string;
+  originToken?: string;
+  destinationToken?: string;
+  amount: string;
+  walletAddress: string;
+  slippage?: string;
+}
+
+export interface BridgeQuoteResponse {
+  data: {
+    estimatedAmountOut: string;
+    estimatedAmountOutUsd: string;
+    fees: {
+      bridgeFeeBps: number;
+      gasFeeUsd: string;
+      totalFeeUsd: string;
+    };
+    estimatedTimeMs: number;
+    maxTradeUsd: number;
+    steps?: Array<{
+      type: string;
+      description: string;
+      tx: {
+        to: string;
+        data: string;
+        value: string;
+        chainId: number;
+        approvalAddress?: string;
+        approvalToken?: string;
+        approvalAmount?: string;
+      };
+    }>;
+    deposit: {
+      evm?: {
+        to: string;
+        data: string;
+        value: string;
+        chainId: number;
+        approvalAddress?: string;
+        approvalToken?: string;
+        approvalAmount?: string;
+      };
+      solana?: {
+        to: string;
+        amount: string;
+        memo: string;
+        mint?: string;
+        decimals?: number;
+        type?: string;
+      };
+    };
+  };
+}
+
+export interface BridgeStatusParams {
+  id: string;
+}
+
+export interface BridgeStatusResponse {
+  data: {
+    intentId?: string;
+    status: 'pending' | 'deposited' | 'filling' | 'filled' | 'settled' | 'retrying' | 'refunded' | 'failed';
+    originChainId?: string;
+    destinationChainId?: string;
+    sender?: string;
+    recipient?: string;
+    amountIn?: string;
+    amountOut?: string | null;
+    depositTxHash?: string | null;
+    fillTxHash?: string | null;
+    settleTxHash?: string | null;
+    latencyMs?: number | null;
+    timestamps?: {
+      depositDetected?: string | null;
+      fillSent?: string | null;
+      fillConfirmed?: string | null;
+      settled?: string | null;
+    };
+    createdAt?: string;
+    message?: string;
+  };
+}
+
+export interface BridgeRoutesResponse {
+  data: {
+    routes: Array<{
+      originChainId: string;
+      destinationChainId: string;
+      estimatedTimeMs: number;
+      maxTradeUsd: number;
+      feeBps: number;
+      supportedTokens: string;
+    }>;
+  };
+}

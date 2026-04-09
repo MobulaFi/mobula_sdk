@@ -127,6 +127,11 @@ import axios, { type AxiosError, type AxiosInstance } from 'axios';
 import type { z } from 'zod';
 import { getAuthHeaders, type MobulaOptions } from '../auth.ts';
 import type {
+  BridgeQuoteParams,
+  BridgeQuoteResponse,
+  BridgeRoutesResponse,
+  BridgeStatusParams,
+  BridgeStatusResponse,
   TokenPositionsBatchParams,
   TokenPositionsBatchResponse,
   WalletPositionsBatchParams,
@@ -624,5 +629,31 @@ export class RestClient {
 
   async fetchEnrichedTrades(params: EnrichedTradesParams): Promise<EnrichedTradesResponse> {
     return this.request<EnrichedTradesParams, EnrichedTradesResponse>('get', '/api/2/token/trades-enriched', params);
+  }
+
+  // ===== Bridge (Alpha Preview) =====
+
+  /**
+   * Get a bridge quote with deposit transaction data.
+   * @alpha This endpoint is in alpha preview and may change without notice.
+   */
+  async fetchBridgeQuote(params: BridgeQuoteParams): Promise<BridgeQuoteResponse> {
+    return this.request<BridgeQuoteParams, BridgeQuoteResponse>('get', '/api/2/bridge/quote', params);
+  }
+
+  /**
+   * Get bridge intent status by intentId or deposit TX hash.
+   * @alpha This endpoint is in alpha preview and may change without notice.
+   */
+  async fetchBridgeStatus(params: BridgeStatusParams): Promise<BridgeStatusResponse> {
+    return this.request<undefined, BridgeStatusResponse>('get', `/api/2/bridge/status/${params.id}`);
+  }
+
+  /**
+   * List all supported bridge routes.
+   * @alpha This endpoint is in alpha preview and may change without notice.
+   */
+  async fetchBridgeRoutes(): Promise<BridgeRoutesResponse> {
+    return this.request<undefined, BridgeRoutesResponse>('get', '/api/2/bridge/routes');
   }
 }
