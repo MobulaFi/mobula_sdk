@@ -92,6 +92,7 @@ export const buildExplorerUrl = (
     story: 'https://www.storyscan.io',
     plasma: 'https://plasmascan.to',
     bob: 'https://explorer.gobob.xyz',
+    ton: 'https://tonviewer.com',
   };
 
   const baseChainIdMap: Record<string, string> = {
@@ -181,6 +182,7 @@ export const buildExplorerUrl = (
     'evm:1514': 'https://www.storyscan.io',
     'evm:9745': 'https://plasmascan.to',
     'evm:60808': 'https://explorer.gobob.xyz',
+    'ton:mainnet': 'https://tonviewer.com',
   };
 
   let base = baseChainMap[chainKey] || baseChainIdMap[chainKey] || undefined;
@@ -197,7 +199,11 @@ export const buildExplorerUrl = (
     token: `${base}/token/${hash}`,
   };
 
-  switch (chainKey) {
+  // Callers pass either a chain name (e.g. "solana") OR a chainId
+  // (e.g. "solana:solana", "ton:mainnet", "evm:1"). Normalise to the chain
+  // prefix so per-chain URL conventions match in either form.
+  const chainPrefix = chainKey.includes(':') ? (chainKey.split(':')[0] ?? chainKey) : chainKey;
+  switch (chainPrefix) {
     case 'solana':
       return {
         tx: `${base}/tx/${hash}`,
@@ -223,11 +229,15 @@ export const buildExplorerUrl = (
       }[type];
 
     case 'ton':
+      // tonviewer.com URL conventions: account / jetton master / contract
+      // all live at the bare-address path (e.g. https://tonviewer.com/EQ…).
+      // Transactions live at /transaction/<hash>. Block has no clean URL,
+      // fall back to the bare-address shape.
       return {
         tx: `${base}/transaction/${hash}`,
-        address: `${base}/address/${hash}`,
-        block: `${base}/block/${hash}`,
-        token: `${base}/jetton/${hash}`,
+        address: `${base}/${hash}`,
+        block: `${base}/${hash}`,
+        token: `${base}/${hash}`,
       }[type];
 
     default:

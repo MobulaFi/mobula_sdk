@@ -180,3 +180,53 @@ export interface BridgeRoutesResponse {
     }>;
   };
 }
+
+// FastSearchPostBody (POST /api/2/fast-search) — pulse-v2 filter syntax.
+// Mirrors `FastSearchPostBodySchema` in @mobula/types/v1/search/SearchSchema.ts.
+export interface FastSearchPostBody {
+  /** Search term (name / symbol / address). Wrap in double quotes for exact-symbol match. */
+  input: string;
+  /** Chain ID(s) to filter — same shorthand as pulse `view.chainId`. */
+  chainId?: string | string[];
+  /** Pool type(s) to filter — same shorthand as pulse `view.poolTypes`. */
+  poolTypes?: string | string[];
+  /**
+   * Prisma-like `where` tree supporting `AND`/`OR`/`NOT` and leaf operators
+   * (`equals`, `not`, `gte`, `gt`, `lte`, `lt`, `in`, `notIn`, `contains`,
+   * `startsWith`, `endsWith`, `mode: 'insensitive'`). Same surface as
+   * `view.filters` on `POST /api/2/pulse`.
+   */
+  filters?: Record<string, unknown>;
+  sortBy?:
+    | 'volume24h'
+    | 'marketCap'
+    | 'createdAt'
+    | 'volume1h'
+    | 'feesPaid5min'
+    | 'feesPaid1h'
+    | 'feesPaid24h'
+    | 'volume5min'
+    | 'holdersCount'
+    | 'organicVolume1h'
+    | 'totalFeesPaidUsd'
+    | 'searchScore'
+    | 'trendingScore24h'
+    | 'volume_24h'
+    | 'market_cap'
+    | 'created_at'
+    | 'volume_1h'
+    | 'fees_paid_5min'
+    | 'fees_paid_1h'
+    | 'fees_paid_24h'
+    | 'volume_5min'
+    | 'holders_count'
+    | 'organic_volume_1h'
+    | 'total_fees_paid_usd'
+    | 'search_score'
+    | 'trending_score_24h';
+  sortOrder?: 'asc' | 'desc';
+  /** 1–20, default 5. */
+  limit?: number;
+  /** Default 0. */
+  offset?: number;
+}

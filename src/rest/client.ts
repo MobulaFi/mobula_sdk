@@ -61,6 +61,8 @@ import type {
   TokenDetailsBatchResponse,
   TokenDetailsParams,
   TokenDetailsResponse,
+  TokenDevHistoryParams,
+  TokenDevHistoryResponse,
   TokenFirstBuyersParams,
   TokenFirstBuyersResponse,
   TokenKlineBsPointParams,
@@ -111,8 +113,12 @@ import type {
   WalletNFTResponse,
   WalletPositionBatchParams,
   WalletPositionBatchResponse,
+  WalletPositionHistoryParams,
+  WalletPositionHistoryResponse,
   WalletPositionParams,
   WalletPositionResponse,
+  WalletPositionsHistoryParams,
+  WalletPositionsHistoryResponse,
   WalletPositionsParams,
   WalletPositionsResponse,
   WalletTradesParams,
@@ -132,6 +138,7 @@ import type {
   BridgeRoutesResponse,
   BridgeStatusParams,
   BridgeStatusResponse,
+  FastSearchPostBody,
   TokenPositionsBatchParams,
   TokenPositionsBatchResponse,
   WalletPositionsBatchParams,
@@ -285,6 +292,16 @@ export class RestClient {
 
   async fetchSearchFast(params: SearchParams): Promise<SearchFastResponse> {
     return this.request<SearchParams, SearchFastResponse>('get', '/api/2/fast-search', params);
+  }
+
+  /**
+   * Universal Search — POST variant. Accepts the pulse-v2 filter syntax
+   * (`AND`/`OR`/`NOT` tree in `filters`, top-level `chainId`/`poolTypes`
+   * shorthands). Any `filters` block valid here is a valid sub-payload of a
+   * pulse view.
+   */
+  async fetchSearchFastPost(params: FastSearchPostBody): Promise<SearchFastResponse> {
+    return this.request<FastSearchPostBody, SearchFastResponse>('post', '/api/2/fast-search', params);
   }
 
   async fetchTokenFirstBuyers(params: TokenFirstBuyersParams): Promise<TokenFirstBuyersResponse> {
@@ -442,6 +459,23 @@ export class RestClient {
     return this.request<TokenTradeParams, SingleTokenTradeResponse>('get', '/api/2/token/trade', params);
   }
 
+  /**
+   * Fetch a token deployer's on-chain activity feed — a merged,
+   * chronological stream of:
+   *   - `feeClaim` events (PumpFun, PumpSwap, Meteora DBC — covers Bags,
+   *     Moonshot, Believe, and other DBC-based launchpads),
+   *   - `swap` events the deployer executed on the queried token,
+   *   - `transfer` events of the token to/from the deployer.
+   *
+   * Rows are polymorphic — discriminate on the `type` field.
+   *
+   * @alpha Endpoint is in early access; response shape may change without
+   * notice. Currently Solana-only.
+   */
+  async fetchTokenDevHistory(params: TokenDevHistoryParams): Promise<TokenDevHistoryResponse> {
+    return this.request<TokenDevHistoryParams, TokenDevHistoryResponse>('get', '/api/2/token/dev-history', params);
+  }
+
   async fetchTokenTrades(
     params: TokenTradesParams & { formatted?: boolean },
   ): Promise<TokenTradesResponse | FormattedTokenTradesResponse> {
@@ -523,6 +557,24 @@ export class RestClient {
     return this.request<WalletPositionsBatchParams, WalletPositionsBatchResponse>(
       'post',
       '/api/2/wallet/positions',
+      params,
+    );
+  }
+
+  /** @alpha Response shape may change while we iterate on cycle semantics. */
+  async fetchWalletPositionHistory(params: WalletPositionHistoryParams): Promise<WalletPositionHistoryResponse> {
+    return this.request<WalletPositionHistoryParams, WalletPositionHistoryResponse>(
+      'get',
+      '/api/2/wallet/position-history',
+      params,
+    );
+  }
+
+  /** @alpha Response shape may change while we iterate on cycle semantics. */
+  async fetchWalletPositionsHistory(params: WalletPositionsHistoryParams): Promise<WalletPositionsHistoryResponse> {
+    return this.request<WalletPositionsHistoryParams, WalletPositionsHistoryResponse>(
+      'get',
+      '/api/2/wallet/positions-history',
       params,
     );
   }
