@@ -90,6 +90,12 @@ const SERVER_TYPE_MAP: Record<keyof SubscriptionPayload, string> = {
   balance: 'balance',
 };
 
+const normalizeWebSocketUrl = (url: string) => {
+  if (url.startsWith('https://')) return `wss://${url.slice('https://'.length)}`;
+  if (url.startsWith('http://')) return `ws://${url.slice('http://'.length)}`;
+  return url;
+};
+
 type WSState = {
   ws: WebSocket;
   heartbeatInterval?: ReturnType<typeof setTimeout>;
@@ -109,6 +115,7 @@ export class StreamClient extends EventEmitter {
     { type: keyof SubscriptionPayload; payload: SubscriptionPayload[keyof SubscriptionPayload] }
   > = new Map();
   private reconnectAttempts: Map<keyof SubscriptionPayload, number> = new Map();
+  private customUrl?: string;
   private customUrls?: Partial<Record<keyof SubscriptionPayload, string>>;
 
   constructor(
@@ -120,6 +127,7 @@ export class StreamClient extends EventEmitter {
     super();
     this.apiKey = options.apiKey || '';
     this.debug = options.debug || false;
+    this.customUrl = options.wsUrl;
     this.customUrls = options.wsUrlMap;
   }
 
@@ -128,7 +136,7 @@ export class StreamClient extends EventEmitter {
     payload: SubscriptionPayload[K],
     callback?: StreamCallback<unknown>,
   ): string {
-    const url = this.customUrls?.[type] || DEFAULT_URLS[type];
+    const url = normalizeWebSocketUrl(this.customUrl || this.customUrls?.[type] || DEFAULT_URLS[type]);
     const subId =
       (payload as { subscriptionId?: string }).subscriptionId ?? this.generateDeterministicSubscriptionId(payload);
     (payload as { subscriptionId?: string }).subscriptionId = subId;
